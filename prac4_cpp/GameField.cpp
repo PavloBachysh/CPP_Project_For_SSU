@@ -1,6 +1,7 @@
 //GameField.cpp
 #include "GameField.h"
 #include <iostream>
+#define EMPTY_VALUE 999
 
 void GameField::init() {
 	step = 0;
@@ -23,6 +24,7 @@ void GameField::init() {
 		field[size-1][size-3] = 1;
 	}
 
-	emptyRow = size;
-	emptyColumn = size;
+	emptyRow = size-1;
+	emptyColumn = size-1;
+	field[emptyRow][emptyColumn] = EMPTY_VALUE;
 }

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#define EMPTY_VALUE 999
 
 #define BORDER 25
 #define MAX_NUMBER_LENGHT 2
@@ -21,7 +22,7 @@ void Display::displayGame(GameField gf) {
         std::cout << std::string(rowSize, '-') << std::endl;
         std::cout << std::string(BORDER, ' ');
         for (int j = 0; j < gf.size; j++) {
-            if (gf.field[i][j] != 0) {
+            if (gf.field[i][j] != EMPTY_VALUE) {
                 std::cout << "|" << std::setw(MAX_NUMBER_LENGHT) << gf.field[i][j] << "|";
             }
             else {
