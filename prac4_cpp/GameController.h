@@ -1,3 +1,4 @@
+//GameController.h
 #pragma once
 #include "GameField.h"
 #include "Reader.h"
@@ -18,4 +19,5 @@ public:
 	GameController(GameField& gameField, Display& display, Reader& reader);
 	void startGame();
 	void endGame();
+	GameController& operator>> (const int idx[2]);
 };

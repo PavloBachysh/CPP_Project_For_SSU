@@ -17,6 +17,12 @@ void Display::displayGame(GameField gf) {
     std::cout << std::string(BORDER, ' ');
 	std::cout << std::string((rowSize-8)/2, ' ') << "| GAME |" << std::endl;
 
+    std::cout << gf;
+}
+
+std::ostream& operator<<(std::ostream& out, const GameField& gf) {
+    int rowSize = gf.size * (MAX_NUMBER_LENGHT + SYMBOLS_NEAR_NUMBER);
+
     for (int i = 0; i < gf.size; i++) {
         std::cout << std::string(BORDER, ' ');
         std::cout << std::string(rowSize, '-') << std::endl;
@@ -33,4 +39,5 @@ void Display::displayGame(GameField gf) {
     }
     std::cout << std::string(BORDER, ' ');
     std::cout << std::string(rowSize, '-') << std::endl;
+	return out;
 }

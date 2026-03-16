@@ -3,8 +3,8 @@
 class Reader {
 private:
 	char command;
-	void move(char command);
 public:
 	char inputCommand();
 	int inputSize();
+	int* commantToIdx(char command);
 };

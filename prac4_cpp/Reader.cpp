@@ -17,3 +17,29 @@ char Reader::inputCommand() {
 	std::cin >> command;
 	return command;
 }
+
+int* Reader::commantToIdx(char command) {
+	int* idx = new int[2];
+	switch (command) {
+		case 'w':
+			idx[0] = -1;
+			idx[1] = 0;
+			break;
+		case 's':
+			idx[0] = 1;
+			idx[1] = 0;
+			break;
+		case 'a':
+			idx[0] = 0;
+			idx[1] = -1;
+			break;
+		case 'd':
+			idx[0] = 0;
+			idx[1] = 1;
+			break;
+		default:
+			idx[0] = 0;
+			idx[1] = 0;
+	}
+	return idx;
+}

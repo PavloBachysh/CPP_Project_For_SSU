@@ -1,3 +1,4 @@
+//GameController.cpp
 #include <iostream>
 #include "GameController.h"
 #include "GameField.h"
@@ -38,35 +39,9 @@ bool GameController::move() {
     char command = r.inputCommand();
     int movable;
     if (canBeMoved(command)) {
-        switch (command) {
-        case 'w':
-    //        movable = gF.field[gF.emptyRow - 1][gF.emptyColumn];
-    //        gF.field[gF.emptyRow][gF.emptyColumn] = movable;        
-    //        gF.field[gF.emptyRow - 1][gF.emptyColumn] = 0;
-            std::swap(gF.field[gF.emptyRow][gF.emptyColumn], gF.field[gF.emptyRow - 1][gF.emptyColumn]);
-            gF.emptyRow--;
-			return true;
-			break;
-        case 's':
-            std::swap(gF.field[gF.emptyRow][gF.emptyColumn], gF.field[gF.emptyRow + 1][gF.emptyColumn]);
-			gF.emptyRow++;
-            return true;
-			break;
-        case 'a':
-			std::swap(gF.field[gF.emptyRow][gF.emptyColumn], gF.field[gF.emptyRow][gF.emptyColumn - 1]);
-			gF.emptyColumn--;
-            return true;
-			break;
-		case 'd':
-			std::swap(gF.field[gF.emptyRow][gF.emptyColumn], gF.field[gF.emptyRow][gF.emptyColumn + 1]);
-			gF.emptyColumn++;
-            return true;
-			break;
-		default:
-            std::cout << "Wrong command!" << std::endl;
-            return false;
-			break;
-        }
+		int* idx = r.commantToIdx(command);
+        *this >> idx;
+		return true;
     }
     else {
 		std::cout << "End of the game field!" << std::endl;
@@ -90,4 +65,11 @@ bool GameController::isWon() {
         }
     }
 	return true;
+}
+
+GameController& GameController::operator>> (const int idx[2]) {
+    std::swap(gF.field[gF.emptyRow][gF.emptyColumn], gF.field[gF.emptyRow+idx[0]][gF.emptyColumn + idx[1]]);
+    gF.emptyRow += idx[0];
+	gF.emptyColumn += idx[1];
+	return *this;
 }
