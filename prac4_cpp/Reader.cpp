@@ -12,9 +12,16 @@ int Reader::inputSize() {
 
 char Reader::inputCommand() {
 	char command;
-	std::cout << "Enter the command (w - up, s - down, a - left, d - right)" << std::endl;
+	std::cout << "Enter the command (w - up, s - down, a - left, d - right, SPACE - pause)" << std::endl;
 	std::cout << "Command: ";
-	std::cin >> command;
+	while (std::cin.get(command)) {
+		if (command == '\n') {
+			continue;
+		}
+		else {
+			break;
+		}
+	}
 	return command;
 }
 
@@ -42,4 +49,11 @@ int* Reader::commantToIdx(char command) {
 			idx[1] = 0;
 	}
 	return idx;
+}
+
+int Reader::inputMenuVariant() {
+	int menuVariant;
+	std::cout << "Enter variant: ";
+	std::cin >> menuVariant;
+	return menuVariant;
 }

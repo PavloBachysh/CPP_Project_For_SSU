@@ -13,11 +13,46 @@ void GameController::startGame() {
     gF.size = r.inputSize();
     gF.init();
     d.displayGame(gF);
-    while(!isWon()) {
-        if (move()) {
-            d.displayGame(gF);
+    continueGame();
+	checkStatus();
+}
+
+void GameController::endGame() {
+    gF.destroy();
+}
+
+void GameController::pause() {
+    gF.state = NONACTIVE;
+    d.displayPause();
+    menu();
+}
+
+void GameController::menu() {
+    d.displayMenu();
+    switch (r.inputMenuVariant()) {
+    case 1:
+        startGame();
+        break;
+    case 2:
+        if (gF.isCreated) {
+            continueGame();
         }
-	}
+        else {
+            std::cout << "Game is not created yet!" << std::endl;
+			menu();
+        }
+        break;
+    case 3:
+        d.displayRules();
+        menu();
+        break;
+    case 4:
+        endGame();
+		break;
+    default:
+		std::cout << "Wrong variant!" << std::endl;
+        menu();
+    }
 }
 
 bool GameController::canBeMoved(char dir) {
@@ -35,12 +70,27 @@ bool GameController::canBeMoved(char dir) {
     }
 }
 
+void GameController::continueGame() {
+    gF.state = ACTIVE;
+    d.displayGame(gF);
+    while (gF.state == ACTIVE) {
+        if (move()) {
+            d.displayGame(gF);
+        }
+    }
+}
+
 bool GameController::move() {
     char command = r.inputCommand();
     int movable;
+    if (command == ' ') {
+        pause();
+        return false;
+    }
     if (canBeMoved(command)) {
 		int* idx = r.commantToIdx(command);
         *this >> idx;
+        gF.step++;
 		return true;
     }
     else {
@@ -64,7 +114,26 @@ bool GameController::isWon() {
             return false;
         }
     }
+
+	gF.state = WIN;
 	return true;
+}
+
+void GameController::checkStatus() {
+    switch (gF.state) {
+    case WIN:
+		d.displayWin();
+		endGame();
+        break;
+    case NONACTIVE:
+		d.displayPause();
+        break;
+    case BROKEN:
+		d.displayEnd();
+		endGame();
+        break;
+    }
+
 }
 
 GameController& GameController::operator>> (const int idx[2]) {

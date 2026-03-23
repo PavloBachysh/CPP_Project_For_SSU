@@ -4,9 +4,13 @@
 #define EMPTY_VALUE 999
 
 void GameField::init() {
-	step = 0;
-	state = ACTIVE;
 
+	if (isCreated) {
+		destroy();
+		step = 0;
+	}
+
+	state = ACTIVE;
 	field.resize(size);
 	for (int i = 0; i < size; i++) {
 		field[i].resize(size);
@@ -27,4 +31,11 @@ void GameField::init() {
 	emptyRow = size-1;
 	emptyColumn = size-1;
 	field[emptyRow][emptyColumn] = EMPTY_VALUE;
+	isCreated = true;
+}
+
+void GameField::destroy() {
+	field.clear();
+	state = BROKEN;
+	isCreated = false;
 }

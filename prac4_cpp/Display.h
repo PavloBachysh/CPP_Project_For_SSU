@@ -7,6 +7,9 @@ class Display {
 public:
 	void displayMenu();
 	void displayRules();
+	void displayWin();
+	void displayPause();
+	void displayEnd();
 	void displayGame(GameField gf);
 };
 

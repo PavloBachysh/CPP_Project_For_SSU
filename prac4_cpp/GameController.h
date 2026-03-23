@@ -6,9 +6,12 @@
 
 class GameController {
 private:
+	void continueGame();
+	void pause();
 	bool isWon();
 	bool canBeMoved(char dir);
 	bool move();
+	void checkStatus();
 
 	GameField& gF;
 	Display& d;
@@ -19,5 +22,6 @@ public:
 	GameController(GameField& gameField, Display& display, Reader& reader);
 	void startGame();
 	void endGame();
+	void menu();
 	GameController& operator>> (const int idx[2]);
 };

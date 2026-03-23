@@ -7,9 +7,14 @@
 int main()
 {
 	GameField gameField;
+	gameField.step = 0;
+	gameField.state = NONACTIVE;
+	gameField.isCreated = false;
+
+
 	Display display;
 	Reader reader;
 	GameController gameController(gameField, display, reader);
 
-	gameController.startGame();
+	gameController.menu();
 }
