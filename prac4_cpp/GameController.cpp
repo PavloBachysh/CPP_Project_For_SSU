@@ -10,9 +10,20 @@ GameController::GameController(GameField& gameField, Display& display, Reader& r
 
 
 void GameController::startGame() {
-    gF.size = r.inputSize();
+    try {
+        gF.size = r.inputSize();
+    }
+    catch (const char* msg) {
+        std::cerr << msg << std::endl;
+        startGame();
+        return;
+	}
+    catch (const int er) {
+        std::cerr << "You must enter an integer" << std::endl;
+        startGame();
+        return;
+    }
     gF.init();
-    d.displayGame(gF);
     continueGame();
 	checkStatus();
 }
@@ -29,7 +40,21 @@ void GameController::pause() {
 
 void GameController::menu() {
     d.displayMenu();
-    switch (r.inputMenuVariant()) {
+    int imv;
+    try {
+        imv = r.inputMenuVariant();
+    }
+    catch (const char* msg) {
+        std::cerr << msg << std::endl;
+        menu();
+        return;
+    }
+    catch (const int er) {
+        std::cerr << "You must enter an integer" << std::endl;
+        menu();
+        return;
+    }
+    switch (imv) {
     case 1:
         startGame();
         break;
@@ -88,7 +113,14 @@ bool GameController::move() {
         return false;
     }
     if (canBeMoved(command)) {
-		int* idx = r.commantToIdx(command);
+        int* idx;
+        try {
+            idx = r.commantToIdx(command);
+        }
+        catch (const char* msg) {
+            std::cerr << msg << std::endl;
+            return false;
+		}
         *this >> idx;
         gF.step++;
 		return true;
