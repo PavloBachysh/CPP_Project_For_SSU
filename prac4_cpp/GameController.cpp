@@ -14,12 +14,12 @@ void GameController::startGame() {
         gF.size = r.inputSize();
     }
     catch (const char* msg) {
-        std::cerr << msg << std::endl;
+		d.displayError(msg);
         startGame();
         return;
 	}
     catch (const int er) {
-        std::cerr << "You must enter an integer" << std::endl;
+		d.displayError("You must enter an integer");
         startGame();
         return;
     }
@@ -45,12 +45,12 @@ void GameController::menu() {
         imv = r.inputMenuVariant();
     }
     catch (const char* msg) {
-        std::cerr << msg << std::endl;
+		d.displayError(msg);
         menu();
         return;
     }
     catch (const int er) {
-        std::cerr << "You must enter an integer" << std::endl;
+		d.displayError("You must enter an integer");
         menu();
         return;
     }
@@ -63,7 +63,7 @@ void GameController::menu() {
             continueGame();
         }
         else {
-            std::cout << "Game is not created yet!" << std::endl;
+			d.displayMessage("Trying to continue. No game to continue! Start new game.");
 			menu();
         }
         break;
@@ -75,7 +75,7 @@ void GameController::menu() {
         endGame();
 		break;
     default:
-		std::cout << "Wrong variant!" << std::endl;
+		d.displayMessage("Wrong variant!");
         menu();
     }
 }
@@ -107,6 +107,7 @@ void GameController::continueGame() {
 
 bool GameController::move() {
     char command = r.inputCommand();
+	d.displayMessage("Player entered command: " + std::string(1, command));
     int movable;
     if (command == ' ') {
         pause();
@@ -126,7 +127,7 @@ bool GameController::move() {
 		return true;
     }
     else {
-		std::cout << "End of the game field!" << std::endl;
+		d.displayMessage("End of the game field! You are trying to move out of bounds.");
 		return false;
     }
 }

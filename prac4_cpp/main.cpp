@@ -16,5 +16,7 @@ int main()
 	Reader reader;
 	GameController gameController(gameField, display, reader);
 
+	display.displayOnStart();
 	gameController.menu();
+	display.displayOnEnd();
 }
